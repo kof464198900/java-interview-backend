@@ -1,0 +1,12 @@
+[phases.setup]
+# 指定使用 JDK 8
+nixPkgs = ["openjdk8"]
+
+[phases.build]
+# 你的项目构建命令
+cmds = ["./mvnw clean install -DskipTests"]
+
+[start]
+# 项目启动命令，注意替换 jar 包名称
+cmd = "java -jar target/*.jar"
+
