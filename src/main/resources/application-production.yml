@@ -1,0 +1,11 @@
+# application-production.yml
+spring:
+  datasource:
+    # 使用环境变量 DATABASE_URL，该变量你将在 Railway 中设置
+    url: ${DATABASE_URL}
+    # Neon 的 DATABASE_URL 已经包含了用户名、密码、主机等信息，
+    # 所以通常不需要再单独配置 username/password，
+    # 但如果你需要覆盖，也可以使用环境变量
+    username: ${PGUSER:}
+    password: ${PGPASSWORD:}
+    driver-class-name: org.postgresql.Driver
