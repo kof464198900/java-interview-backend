@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.interview.mapper.QuestionMapper">
+    
+    <!-- 分页查询题目（包含分类名称） -->
+    <select id="selectQuestionPage" resultType="com.interview.vo.QuestionVO">
+        SELECT q.id, q.category_id as categoryId, c.name as categoryName, 
+               q.title, q.answer_key as answerKey, q.expand_knowledge as expandKnowledge, q.difficulty, q.view_count as viewCount
+        FROM question q
+        LEFT JOIN question_category c ON q.category_id = c.id
+        WHERE q.status = 1
+        <if test="categoryId != null">
+            AND q.category_id = #{categoryId}
+        </if>
+        ORDER BY q.created_at DESC
+    </select>
+    
+    <!-- 查询题目详情（包含分类名称） -->
+    <select id="selectQuestionDetail" resultType="com.interview.vo.QuestionVO">
+        SELECT q.id, q.category_id as categoryId, c.name as categoryName,
+               q.title, q.answer_key as answerKey, q.expand_knowledge as expandKnowledge, q.difficulty, q.view_count as viewCount
+        FROM question q
+        LEFT JOIN question_category c ON q.category_id = c.id
+        WHERE q.id = #{id}
+    </select>
+    
+</mapper>
