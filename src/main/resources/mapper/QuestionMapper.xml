@@ -5,20 +5,24 @@
     <!-- 分页查询题目（包含分类名称） -->
     <select id="selectQuestionPage" resultType="com.interview.vo.QuestionVO">
         SELECT q.id, q.category_id as categoryId, c.name as categoryName, 
-               q.title, q.answer_key as answerKey, q.expand_knowledge as expandKnowledge, q.difficulty, q.view_count as viewCount
+               q.title, q.answer_key as answerKey, q.expand_knowledge as expandKnowledge, 
+               q.difficulty, q.view_count as viewCount,
+               q.type, q.options, q.correct_answer as correctAnswer
         FROM question q
         LEFT JOIN question_category c ON q.category_id = c.id
         WHERE q.status = 1
         <if test="categoryId != null">
             AND q.category_id = #{categoryId}
         </if>
-        ORDER BY q.created_at DESC
+        ORDER BY q.id ASC
     </select>
     
     <!-- 查询题目详情（包含分类名称） -->
     <select id="selectQuestionDetail" resultType="com.interview.vo.QuestionVO">
         SELECT q.id, q.category_id as categoryId, c.name as categoryName,
-               q.title, q.answer_key as answerKey, q.expand_knowledge as expandKnowledge, q.difficulty, q.view_count as viewCount
+               q.title, q.answer_key as answerKey, q.expand_knowledge as expandKnowledge, 
+               q.difficulty, q.view_count as viewCount,
+               q.type, q.options, q.correct_answer as correctAnswer
         FROM question q
         LEFT JOIN question_category c ON q.category_id = c.id
         WHERE q.id = #{id}
