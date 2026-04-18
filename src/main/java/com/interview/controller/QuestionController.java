@@ -1,5 +1,8 @@
 package com.interview.controller;
 
+import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
+import com.interview.entity.Question;
+import com.interview.mapper.QuestionMapper;
 import com.interview.service.QuestionService;
 import com.interview.vo.PageResult;
 import com.interview.vo.QuestionVO;
@@ -20,6 +23,7 @@ import java.util.List;
 public class QuestionController {
     
     private final QuestionService questionService;
+    private final QuestionMapper questionMapper;
     
     /**
      * 获取分类列表
@@ -61,5 +65,26 @@ public class QuestionController {
     public Result<Void> increaseViewCount(@ApiParam("题目ID") @PathVariable Long id) {
         questionService.increaseViewCount(id);
         return Result.success();
+    }
+    
+    /**
+     * 获取随机题目（继续答题）
+     */
+    @GetMapping("/random")
+    @ApiOperation("获取随机题目")
+    public Result<QuestionVO> getRandomQuestion(
+            @ApiParam("分类ID") @RequestParam(required = false) Long categoryId) {
+        QueryWrapper<Question> wrapper = new QueryWrapper<>();
+        wrapper.eq("status", 1);
+        if (categoryId != null) {
+            wrapper.eq("category_id", categoryId);
+        }
+        wrapper.orderByRaw("RANDOM()");
+        wrapper.last("LIMIT 1");
+        Question question = questionMapper.selectOne(wrapper);
+        if (question == null) {
+            return Result.success(null);
+        }
+        return Result.success(questionService.getQuestionDetail(question.getId(), 1L));
     }
 }
