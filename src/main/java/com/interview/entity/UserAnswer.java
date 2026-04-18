@@ -6,27 +6,24 @@ import com.baomidou.mybatisplus.annotation.TableName;
 import lombok.Data;
 import java.time.LocalDateTime;
 
-/**
- * 题目分类实体类
- */
 @Data
-@TableName("question_category")
-public class QuestionCategory {
+@TableName("user_answer")
+public class UserAnswer {
     
     @TableId(type = IdType.AUTO)
     private Long id;
     
-    private String name;
+    private Long userId;
     
-    private String icon;
+    private Long categoryId;
     
-    private Integer sort;
+    private Long questionId;
     
-    private Long parentId;
+    private String userAnswer;
     
-    private Integer level;
+    private Integer isCorrect;
+    
+    private Integer answerMode;
     
     private LocalDateTime createdAt;
-    
-    private LocalDateTime updatedAt;
 }

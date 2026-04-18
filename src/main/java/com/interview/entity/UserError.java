@@ -27,11 +27,14 @@ public class UserError {
     /**
      * 题目ID
      */
-    private Long questionId;
+private Long questionId;
     
-    /**
-     * 用户答案
-     */
+    private Long categoryId;
+    
+    private String wrongAnswer;
+    
+    private Integer wrongCount;
+    
     private String userAnswer;
     
     /**
