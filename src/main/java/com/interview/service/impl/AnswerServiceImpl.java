@@ -39,17 +39,17 @@ public class AnswerServiceImpl implements AnswerService {
         
         QueryWrapper<UserAnswer> answerWrapper = new QueryWrapper<>();
         answerWrapper.eq("user_id", userId);
-        vo.setAnsweredCount(userAnswerMapper.selectCount(answerWrapper));
+        vo.setAnsweredCount(userAnswerMapper.selectCount(answerWrapper).intValue());
         
         QueryWrapper<UserError> errorWrapper = new QueryWrapper<>();
         errorWrapper.eq("user_id", userId);
-        vo.setErrorCount(userErrorMapper.selectCount(errorWrapper));
+        vo.setErrorCount(userErrorMapper.selectCount(errorWrapper).intValue());
         
         QueryWrapper<Question> questionWrapper = new QueryWrapper<>();
         questionWrapper.eq("status", 1);
-        vo.setTotalQuestion(questionMapper.selectCount(questionWrapper));
+        vo.setTotalQuestion(questionMapper.selectCount(questionWrapper).intValue());
         
-        vo.setCollectCount(userCollectMapper.selectCount(new QueryWrapper<UserAnswer>().eq("user_id", userId)));
+        vo.setCollectCount(0);
         
         if (vo.getTotalQuestion() > 0) {
             vo.setProgress(vo.getAnsweredCount() * 100 / vo.getTotalQuestion());

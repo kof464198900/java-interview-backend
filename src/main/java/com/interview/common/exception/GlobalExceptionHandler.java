@@ -1,6 +1,6 @@
 package com.interview.common.exception;
 
-import com.interview.vo.Result;
+import com.interview.common.result.Result;
 import org.springframework.http.HttpStatus;
 import org.springframework.validation.BindException;
 import org.springframework.validation.FieldError;

@@ -6,7 +6,7 @@ import com.interview.mapper.QuestionMapper;
 import com.interview.service.QuestionService;
 import com.interview.vo.PageResult;
 import com.interview.vo.QuestionVO;
-import com.interview.vo.Result;
+import com.interview.common.result.Result;
 import io.swagger.annotations.ApiOperation;
 import io.swagger.annotations.ApiParam;
 import lombok.RequiredArgsConstructor;
@@ -79,8 +79,7 @@ public class QuestionController {
         if (categoryId != null) {
             wrapper.eq("category_id", categoryId);
         }
-        wrapper.orderByRaw("RANDOM()");
-        wrapper.last("LIMIT 1");
+        wrapper.last("ORDER BY RANDOM() LIMIT 1");
         Question question = questionMapper.selectOne(wrapper);
         if (question == null) {
             return Result.success(null);

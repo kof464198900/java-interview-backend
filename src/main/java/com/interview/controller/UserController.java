@@ -4,7 +4,7 @@ import com.interview.dto.AnswerDTO;
 import com.interview.service.UserService;
 import com.interview.vo.PageResult;
 import com.interview.vo.QuestionVO;
-import com.interview.vo.Result;
+import com.interview.common.result.Result;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import io.swagger.annotations.ApiParam;

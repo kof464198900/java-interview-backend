@@ -1,4 +1,4 @@
-package com.interview.vo;
+package com.interview.common.result;
 
 import lombok.Data;
 

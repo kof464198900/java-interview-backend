@@ -53,10 +53,10 @@ public class ErrorController {
     public Result<Map> stats() {
         QueryWrapper<UserError> wrapper = new QueryWrapper<>();
         wrapper.eq("user_id", 1L);
-        int total = userErrorMapper.selectCount(wrapper);
+        long total = userErrorMapper.selectCount(wrapper);
         
         Map result = new HashMap();
-        result.put("total", total);
+        result.put("total", (int) total);
         return Result.success(result);
     }
     

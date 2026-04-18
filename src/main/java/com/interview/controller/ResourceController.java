@@ -3,7 +3,7 @@ package com.interview.controller;
 import com.baomidou.mybatisplus.core.conditions.query.LambdaQueryWrapper;
 import com.interview.entity.Resource;
 import com.interview.mapper.ResourceMapper;
-import com.interview.vo.Result;
+import com.interview.common.result.Result;
 import io.swagger.annotations.ApiOperation;
 import io.swagger.annotations.ApiParam;
 import lombok.RequiredArgsConstructor;
