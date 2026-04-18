@@ -23,9 +23,13 @@ public class CategoryController {
         wrapper.orderByAsc("sort");
         List<QuestionCategory> all = categoryMapper.selectList(wrapper);
         
+        System.out.println("All categories: " + all);
+        
         List<QuestionCategory> roots = all.stream()
-            .filter(c -> c.getParentId() == null || c.getParentId() == 0L)
+            .filter(c -> c.getParentId() == null || c.getParentId().equals(0L) || c.getParentId().equals(0))
             .collect(Collectors.toList());
+        
+        System.out.println("Root categories: " + roots);
         
         List<Map> result = new ArrayList<>();
         for (QuestionCategory root : roots) {
