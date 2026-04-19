@@ -4,7 +4,6 @@ import com.baomidou.mybatisplus.annotation.IdType;
 import com.baomidou.mybatisplus.annotation.TableId;
 import com.baomidou.mybatisplus.annotation.TableName;
 import lombok.Data;
-import java.time.LocalDateTime;
 
 /**
  * 错题实体类
@@ -27,18 +26,20 @@ public class UserError {
     /**
      * 题目ID
      */
-private Long questionId;
-    
-    private Long categoryId;
-    
-    private String wrongAnswer;
-    
-    private Integer wrongCount;
-    
-    private String userAnswer;
+    private Long questionId;
     
     /**
-     * 添加时间
+     * 分类ID
      */
-    private LocalDateTime createdAt;
+    private Long categoryId;
+    
+    /**
+     * 错误答案
+     */
+    private String wrongAnswer;
+    
+    /**
+     * 错误次数
+     */
+    private Integer wrongCount;
 }

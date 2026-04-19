@@ -101,8 +101,7 @@ public class UserServiceImpl implements UserService {
     public PageResult<QuestionVO> getErrorList(Long userId, Long page, Long size) {
         Page<UserError> pageParam = new Page<>(page, size);
         LambdaQueryWrapper<UserError> wrapper = new LambdaQueryWrapper<>();
-        wrapper.eq(UserError::getUserId, userId)
-                .orderByDesc(UserError::getCreatedAt);
+        wrapper.eq(UserError::getUserId, userId);
         
         Page<UserError> errorPage = errorMapper.selectPage(pageParam, wrapper);
         
@@ -139,7 +138,8 @@ public class UserServiceImpl implements UserService {
         UserError error = new UserError();
         error.setUserId(userId);
         error.setQuestionId(questionId);
-        error.setUserAnswer(userAnswer);
+        error.setWrongAnswer(userAnswer);
+        error.setWrongCount(1);
         errorMapper.insert(error);
     }
     
