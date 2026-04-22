@@ -11,7 +11,7 @@ import org.apache.ibatis.annotations.Param;
 @Mapper
 public interface QuestionMapper extends BaseMapper<Question> {
     
-    IPage<QuestionVO> selectQuestionPage(Page<?> page, @Param("categoryId") Long categoryId);
+    IPage<QuestionVO> selectQuestionPage(Page<?> page, @Param("categoryId") Long categoryId, @Param("hasOptions") Boolean hasOptions);
     
     QuestionVO selectQuestionDetail(Long id);
 }

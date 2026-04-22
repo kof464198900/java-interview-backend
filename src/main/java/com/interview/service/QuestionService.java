@@ -18,7 +18,7 @@ public interface QuestionService {
     /**
      * 分页获取题目列表
      */
-    PageResult<QuestionVO> getQuestionList(Long categoryId, Long page, Long size);
+    PageResult<QuestionVO> getQuestionList(Long categoryId, Long page, Long size, Boolean hasOptions);
     
     /**
      * 获取题目详情

@@ -14,6 +14,9 @@
         <if test="categoryId != null">
             AND q.category_id = #{categoryId}
         </if>
+        <if test="hasOptions != null and hasOptions == true">
+            AND q.options IS NOT NULL AND q.options != ''
+        </if>
         ORDER BY q.id ASC
     </select>
     

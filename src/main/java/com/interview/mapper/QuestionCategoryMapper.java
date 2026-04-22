@@ -14,10 +14,5 @@ public interface QuestionCategoryMapper extends BaseMapper<QuestionCategory> {
     /**
      * 查询分类及其题目数量
      */
-    @Select("SELECT c.id, c.name, c.icon, c.sort, COUNT(q.id) as questionCount " +
-            "FROM question_category c " +
-            "LEFT JOIN question q ON c.id = q.category_id AND q.status = 1 " +
-            "GROUP BY c.id " +
-            "ORDER BY c.sort")
     java.util.List<com.interview.vo.CategoryVO> selectCategoryWithCount();
 }

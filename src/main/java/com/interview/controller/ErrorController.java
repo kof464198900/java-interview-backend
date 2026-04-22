@@ -10,6 +10,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.*;
+import java.util.stream.Collectors;
 
 @RestController
 @RequestMapping("/api/error")
@@ -19,9 +20,9 @@ public class ErrorController {
     private UserErrorMapper userErrorMapper;
     @Autowired
     private QuestionMapper questionMapper;
-    
+
     @GetMapping("/list")
-    public Result<Map> list(@RequestParam(required = false) Long categoryId) {
+    public Result<Map<String, Object>> list(@RequestParam(required = false) Long categoryId) {
         QueryWrapper<UserError> wrapper = new QueryWrapper<>();
         wrapper.eq("user_id", 1L);
         if (categoryId != null) {
@@ -29,26 +30,43 @@ public class ErrorController {
         }
         wrapper.orderByDesc("id");
         List<UserError> errors = userErrorMapper.selectList(wrapper);
-        
-        List<Map> list = new ArrayList<>();
-        for (UserError error : errors) {
-            Question q = questionMapper.selectById(error.getQuestionId());
-            Map<String, Object> item = new HashMap<>();
-            item.put("id", error.getId());
-            item.put("questionId", error.getQuestionId());
-            item.put("title", q != null ? q.getTitle() : "");
-            item.put("wrongAnswer", error.getWrongAnswer());
-            item.put("correctAnswer", q != null ? q.getCorrectAnswer() : "");
-            item.put("wrongCount", error.getWrongCount());
-            list.add(item);
+
+        if (errors.isEmpty()) {
+            Map<String, Object> result = new HashMap<>();
+            result.put("list", Collections.emptyList());
+            result.put("total", 0);
+            return Result.success(result);
         }
-        
-        Map result = new HashMap();
+
+        List<Long> questionIds = errors.stream()
+                .map(UserError::getQuestionId)
+                .distinct()
+                .collect(Collectors.toList());
+
+        Map<Long, Question> questionMap = questionMapper.selectBatchIds(questionIds).stream()
+                .collect(Collectors.toMap(Question::getId, q -> q));
+
+        List<Map<String, Object>> list = errors.stream()
+                .map(error -> {
+                    Question q = questionMap.get(error.getQuestionId());
+                    Map<String, Object> item = new HashMap<>();
+                    item.put("id", error.getId());
+                    item.put("questionId", error.getQuestionId());
+                    item.put("title", q != null ? q.getTitle() : "");
+                    item.put("wrongAnswer", error.getWrongAnswer());
+                    item.put("correctAnswer", q != null ? q.getCorrectAnswer() : "");
+                    item.put("wrongCount", error.getWrongCount());
+                    return item;
+                })
+                .collect(Collectors.toList());
+
+        Map<String, Object> result = new HashMap<>();
         result.put("list", list);
         result.put("total", list.size());
         return Result.success(result);
     }
-    
+
+
     @GetMapping("/stats")
     public Result<Map> stats() {
         QueryWrapper<UserError> wrapper = new QueryWrapper<>();

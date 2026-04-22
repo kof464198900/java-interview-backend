@@ -42,8 +42,9 @@ public class QuestionController {
     public Result<PageResult<QuestionVO>> getQuestionList(
             @ApiParam("分类ID") @RequestParam(required = false) Long categoryId,
             @ApiParam("页码") @RequestParam(defaultValue = "1") Long page,
-            @ApiParam("每页条数") @RequestParam(defaultValue = "10") Long size) {
-        return Result.success(questionService.getQuestionList(categoryId, page, size));
+            @ApiParam("每页条数") @RequestParam(defaultValue = "10") Long size,
+            @ApiParam("是否过滤判断题") @RequestParam(required = false, defaultValue = "false") Boolean hasOptions) {
+        return Result.success(questionService.getQuestionList(categoryId, page, size, hasOptions));
     }
     
     /**

@@ -31,9 +31,9 @@ public class QuestionServiceImpl implements QuestionService {
     }
     
     @Override
-    public PageResult<QuestionVO> getQuestionList(Long categoryId, Long page, Long size) {
+    public PageResult<QuestionVO> getQuestionList(Long categoryId, Long page, Long size, Boolean hasOptions) {
         Page<QuestionVO> pageParam = new Page<>(page, size);
-        IPage<QuestionVO> questionPage = questionMapper.selectQuestionPage(pageParam, categoryId);
+        IPage<QuestionVO> questionPage = questionMapper.selectQuestionPage(pageParam, categoryId, hasOptions);
         
         return new PageResult<>(
                 questionPage.getCurrent(),
