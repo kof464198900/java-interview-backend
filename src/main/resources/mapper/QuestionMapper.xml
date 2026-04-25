@@ -17,6 +17,9 @@
         <if test="hasOptions != null and hasOptions == true">
             AND q.options IS NOT NULL AND q.options != ''
         </if>
+        <if test="hasOptions != null and hasOptions == false">
+            AND (q.options IS NULL OR q.options = '')
+        </if>
         ORDER BY q.id ASC
     </select>
     
