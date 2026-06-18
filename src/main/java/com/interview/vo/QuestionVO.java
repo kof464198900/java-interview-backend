@@ -1,10 +1,13 @@
 package com.interview.vo;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.JsonInclude;
 import lombok.Data;
 
 /**
  * 题目VO
  */
+@JsonInclude(JsonInclude.Include.NON_NULL)
 @Data
 public class QuestionVO {
     
